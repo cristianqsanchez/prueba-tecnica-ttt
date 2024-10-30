@@ -1,10 +1,18 @@
+import { redirect } from "next/navigation"
 import { Todo, TodoState } from "./types"
+import { getAuth } from "../utils/auth"
 import { fetchTodos } from "./actions"
 import { TodoItem } from "./components/todo-item"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { NewTodoForm } from "./components/new-todo-form"
 
 export default async function Page() {
+  const { userAuth } = getAuth()
+
+  if (!userAuth) {
+    return redirect('/')
+  }
+
   const todos = await fetchTodos()
 
   const groupedTodos = todos.reduce((acc, todo) => {
