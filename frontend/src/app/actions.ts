@@ -4,20 +4,29 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { BACKEND_URL } from './config'
  
-export async function signin(formData: FormData) {
+export async function signin(prevState: any, formData: FormData) {
   const username = formData.get('username')
   const password = formData.get('password')
 
-  await fetch(`${BACKEND_URL}/users`, {
-    headers: { 'Content-Type': 'application/json' },
-    method: 'POST',
-    body: JSON.stringify({
-      username,
-      password
+  try {
+    const res = await fetch(`${BACKEND_URL}/users`, {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+      body: JSON.stringify({
+        username,
+        password
+      })
     })
-  }).then(res => res.json())
 
-  redirect('/login')
+    if (!res.ok) {
+      return { message: 'Username is already taken' }
+    }
+
+    redirect('/login')
+
+  } catch {
+    return { message: 'Username is already taken' }
+  }
 }
 
 export async function login(formData: FormData) {
