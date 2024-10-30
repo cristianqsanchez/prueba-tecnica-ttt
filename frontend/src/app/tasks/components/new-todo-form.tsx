@@ -9,6 +9,8 @@ export function NewTodoForm() {
       <Input
         name="name"
         type="text"
+        min={3}
+        required
         placeholder="Add a new todo"
         className="flex-grow"
       />
