@@ -28,7 +28,7 @@ export function LoginForm() {
     <Form title="Login" action={formAction} cta="Login">
       <div>
         <p>{state?.message}</p>
-        <Link href='/signin'>Go to sign in page</Link>
+        <Link href='/'>Go to sign in page</Link>
       </div>
     </Form>
   );
