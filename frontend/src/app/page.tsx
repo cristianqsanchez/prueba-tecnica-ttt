@@ -1,13 +1,14 @@
-import Link from "next/link";
-import { signin } from "./actions";
-import { Form } from "./components/form" 
+import { redirect } from "next/navigation";
+import { getAuth } from "./utils/auth";
+import { SignInForm } from "./components/auth";
 
 export default function Home() {
+  const { userAuth } = getAuth()
+
+  if (userAuth) {
+    return redirect('/tasks')
+  }
   return (
-    <Form title="Sign in" action={signin} cta="Sign in">
-      <div>
-        <Link href='/login'>Go to login page</Link>
-      </div>
-    </Form>
+    <SignInForm />
   );
 }
